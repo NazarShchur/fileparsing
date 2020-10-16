@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class TestController {
+public class ClientController {
     @PostMapping("/")
     public ResponseEntity parseAvroAndWriteToBigQuery(@RequestParam String bucketName, @RequestParam String objectName){
-        System.out.println(bucketName + "" + objectName);
+        System.out.println(bucketName + " " + objectName);
         return new ResponseEntity(HttpStatus.CREATED);
     }
     @GetMapping("/")
