@@ -18,15 +18,11 @@ import java.util.List;
 public class ClientController {
     private final ClientService clientService;
 
-    @PostMapping("/")
+    @PostMapping("/parse")
     public ResponseEntity parseAvroAndWriteToBigQuery(@RequestParam String bucketName, @RequestParam String objectName) throws IOException {
         List<Client> clientList = clientService.parseAvro(bucketName, objectName);
         clientService.save(clientList);
         clientService.saveOptionals(clientList);
         return new ResponseEntity(HttpStatus.CREATED);
-    }
-    @GetMapping("/")
-    public String testGet(){
-        return "HI";
     }
 }
