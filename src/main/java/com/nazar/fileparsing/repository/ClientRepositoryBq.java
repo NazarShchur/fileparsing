@@ -11,11 +11,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.nazar.fileparsing.entity.ClientFields.ID;
+import static com.nazar.fileparsing.entity.ClientFields.NAME;
+
 @Repository
 @AllArgsConstructor
 public class ClientRepositoryBq implements ClientRepository {
-    private final String ID = "id";
-    private final String NAME = "name";
     private final String datasetName = "clients";
     private final String tableId = "clients";
 

@@ -10,12 +10,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.nazar.fileparsing.entity.ClientFields.*;
+
 @Repository
 @AllArgsConstructor
 public class ClientOptionalsRepositoryBq implements ClientOptionalsRepository {
-    private final String PHONE = "phone";
-    private final String ADDRESS = "address";
-    private final String CLIENT_ID = "client_id";
     private final String datasetName = "clients";
     private final String tableId = "clients_optional";
     private final BigQuery bigQuery;

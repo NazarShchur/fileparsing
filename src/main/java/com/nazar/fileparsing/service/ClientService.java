@@ -6,6 +6,7 @@ import com.google.cloud.bigquery.BigQueryOptions;
 import com.google.cloud.bigquery.InsertAllRequest;
 import com.google.cloud.bigquery.InsertAllResponse;
 import com.nazar.fileparsing.entity.Client;
+import com.nazar.fileparsing.entity.ClientFields;
 import com.nazar.fileparsing.repository.ClientOptionalsRepository;
 import com.nazar.fileparsing.repository.ClientRepository;
 import com.nazar.fileparsing.repository.StorageRepository;
@@ -28,13 +29,14 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class ClientService {
+    private final String PATH_TO_AVRO = "client.avro";
     private final StorageRepository storageRepository;
     private final ClientRepository clientRepository;
     private final ClientOptionalsRepository clientOptionalsRepository;
 
     public List<Client> parseAvro(String bucketName, String objectName) {
         List<Client> list = new ArrayList<>();
-        File file = new File("client.avro");
+        File file = new File(PATH_TO_AVRO);
         storageRepository.getBlob(bucketName, objectName).downloadTo(file.toPath());
         DatumReader<Client> datumReader = new GenericDatumReader<>(Client.SCHEMA$);
         try {
@@ -42,10 +44,10 @@ public class ClientService {
             while (dataFileReader.hasNext()) {
                 GenericRecord record = dataFileReader.next();
                 list.add(Client.newBuilder()
-                        .setId((long) record.get("id"))
-                        .setName((String) record.get("name"))
-                        .setPhone((String) record.get("phone"))
-                        .setAddress((String) record.get("address"))
+                        .setId((long) record.get(ClientFields.ID))
+                        .setName((String) record.get(ClientFields.NAME))
+                        .setPhone((String) record.get(ClientFields.PHONE))
+                        .setAddress((String) record.get(ClientFields.ADDRESS))
                         .build());
             }
         } catch (IOException e) {
