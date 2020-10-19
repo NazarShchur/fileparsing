@@ -1,33 +1,28 @@
 package com.nazar.fileparsing.service;
 
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.bigquery.BigQuery;
-import com.google.cloud.bigquery.BigQueryOptions;
-import com.google.cloud.bigquery.InsertAllRequest;
-import com.google.cloud.bigquery.InsertAllResponse;
 import com.nazar.fileparsing.entity.Client;
 import com.nazar.fileparsing.entity.ClientFields;
 import com.nazar.fileparsing.repository.ClientOptionalsRepository;
 import com.nazar.fileparsing.repository.ClientRepository;
 import com.nazar.fileparsing.repository.StorageRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.file.DataFileReader;
 import org.apache.avro.generic.GenericDatumReader;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.io.DatumReader;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class ClientService {
     private final String PATH_TO_AVRO = "client.avro";
     private final StorageRepository storageRepository;
@@ -56,16 +51,21 @@ public class ClientService {
         return list;
     }
 
+    @Async
     public void save(List<Client> clients) {
+        log.info("start saving all");
         clientRepository.insertAll(clients);
-        saveOptionals(clients);
+        log.info("end saving all");
     }
 
-    private void saveOptionals(List<Client> clients){
+    @Async
+    public void saveOptionals(List<Client> clients){
+        log.info("start saving optionals");
         List<Client> clientsWithOptionals = clients.stream()
                 .filter(client -> client.getAddress() != null || client.getPhone() != null)
                 .collect(Collectors.toList());
         clientOptionalsRepository.insertAll(clientsWithOptionals);
+        log.info("end saving optionals");
     }
 
 }
