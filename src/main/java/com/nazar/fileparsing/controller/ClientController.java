@@ -9,16 +9,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-
 @RestController
 @AllArgsConstructor
 public class ClientController {
     private final ClientService clientService;
 
     @PostMapping("/")
-    public ResponseEntity parseAvroAndWriteToBigQuery(@RequestParam String bucketName, @RequestParam String objectName) throws IOException {
-        clientService.parseAvro(bucketName, objectName);
+    public ResponseEntity parseAvroAndWriteToBigQuery(@RequestParam String bucketName, @RequestParam String objectName){
+        clientService.save(clientService.parseAvro(bucketName, objectName));
         return new ResponseEntity(HttpStatus.CREATED);
     }
     @GetMapping("/")

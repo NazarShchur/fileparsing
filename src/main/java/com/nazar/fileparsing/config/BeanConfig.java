@@ -1,6 +1,8 @@
 package com.nazar.fileparsing.config;
 
+import com.google.cloud.bigquery.BigQuery;
 import com.google.cloud.storage.Storage;
+import com.nazar.fileparsing.repository.BigQueryProvider;
 import com.nazar.fileparsing.repository.StorageProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,7 +10,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class BeanConfig {
     @Bean
-    public Storage storage(){
+    public Storage storage() {
         return StorageProvider.getStorage();
+    }
+
+    @Bean
+    public BigQuery bigQuery() {
+        return BigQueryProvider.getBigQuery();
     }
 }

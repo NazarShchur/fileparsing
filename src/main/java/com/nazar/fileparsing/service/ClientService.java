@@ -6,6 +6,8 @@ import com.google.cloud.bigquery.BigQueryOptions;
 import com.google.cloud.bigquery.InsertAllRequest;
 import com.google.cloud.bigquery.InsertAllResponse;
 import com.nazar.fileparsing.entity.Client;
+import com.nazar.fileparsing.repository.ClientOptionalsRepository;
+import com.nazar.fileparsing.repository.ClientRepository;
 import com.nazar.fileparsing.repository.StorageRepository;
 import lombok.AllArgsConstructor;
 import org.apache.avro.file.DataFileReader;
@@ -21,11 +23,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class ClientService {
     private final StorageRepository storageRepository;
+    private final ClientRepository clientRepository;
+    private final ClientOptionalsRepository clientOptionalsRepository;
 
     public List<Client> parseAvro(String bucketName, String objectName) {
         List<Client> list = new ArrayList<>();
@@ -47,6 +52,18 @@ public class ClientService {
             e.printStackTrace();
         }
         return list;
+    }
+
+    public void save(List<Client> clients) {
+        clientRepository.insertAll(clients);
+        saveOptionals(clients);
+    }
+
+    private void saveOptionals(List<Client> clients){
+        List<Client> clientsWithOptionals = clients.stream()
+                .filter(client -> client.getAddress() != null || client.getPhone() != null)
+                .collect(Collectors.toList());
+        clientOptionalsRepository.insertAll(clientsWithOptionals);
     }
 
 }

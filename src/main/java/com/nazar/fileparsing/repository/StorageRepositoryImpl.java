@@ -3,9 +3,9 @@ package com.nazar.fileparsing.repository;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.Storage;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component
+@Repository
 @AllArgsConstructor
 public class StorageRepositoryImpl implements StorageRepository {
 
