@@ -2,8 +2,10 @@ package com.nazar.fileparsing.service;
 
 import com.nazar.fileparsing.entity.Client;
 import com.nazar.fileparsing.entity.ClientFields;
+import com.nazar.fileparsing.mapper.ClientMapper;
 import com.nazar.fileparsing.repository.ClientOptionalsRepository;
 import com.nazar.fileparsing.repository.ClientRepository;
+import com.nazar.fileparsing.repository.FileSupplier;
 import com.nazar.fileparsing.repository.StorageRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,30 +26,22 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Slf4j
 public class ClientService {
-    private final String PATH_TO_AVRO = "client.avro";
     private final StorageRepository storageRepository;
     private final ClientRepository clientRepository;
     private final ClientOptionalsRepository clientOptionalsRepository;
+    private final ClientMapper clientMapper;
+    private final FileSupplier fileSupplier;
+    private final DatumReader<Client> datumReader;
 
-    public List<Client> parseAvro(String bucketName, String objectName) {
+    public List<Client> parseAvro(String bucketName, String objectName) throws IOException {
         List<Client> list = new ArrayList<>();
-        File file = new File(PATH_TO_AVRO);
+        File file = fileSupplier.supplyFile();
         storageRepository.getBlob(bucketName, objectName).downloadTo(file.toPath());
-        DatumReader<Client> datumReader = new GenericDatumReader<>(Client.SCHEMA$);
-        try {
-            DataFileReader<Client> dataFileReader = new DataFileReader<>(file, datumReader);
-            while (dataFileReader.hasNext()) {
-                GenericRecord record = dataFileReader.next();
-                list.add(Client.newBuilder()
-                        .setId((long) record.get(ClientFields.ID))
-                        .setName((String) record.get(ClientFields.NAME))
-                        .setPhone((String) record.get(ClientFields.PHONE))
-                        .setAddress((String) record.get(ClientFields.ADDRESS))
-                        .build());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        DataFileReader <Client> dataFileReader = new DataFileReader<>(file, datumReader);
+        while (dataFileReader.hasNext()) {
+            list.add(clientMapper.genericRecordToClient(dataFileReader.next()));
         }
+
         return list;
     }
 
@@ -59,7 +53,7 @@ public class ClientService {
     }
 
     @Async
-    public void saveOptionals(List<Client> clients){
+    public void saveOptionals(List<Client> clients) {
         log.info("start saving optionals");
         List<Client> clientsWithOptionals = clients.stream()
                 .filter(client -> client.getAddress() != null || client.getPhone() != null)
@@ -67,5 +61,6 @@ public class ClientService {
         clientOptionalsRepository.insertAll(clientsWithOptionals);
         log.info("end saving optionals");
     }
+
 
 }
