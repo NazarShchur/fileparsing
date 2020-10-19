@@ -12,18 +12,22 @@ public class BigQueryProvider {
     private static final String PATH_TO_JSON_KEY = "cr.json";
     private static BigQuery bigQuery;
 
-    private BigQueryProvider(){}
+    private BigQueryProvider() {
+    }
 
-    public static BigQuery getBigQuery(){
+    public static BigQuery getBigQuery() {
         if (bigQuery == null) {
             try {
-                bigQuery = BigQueryOptions.newBuilder()
-                        .setCredentials(GoogleCredentials
-                                .fromStream(new FileInputStream(PATH_TO_JSON_KEY)))
-                        .setProjectId(PROJECT_ID)
-                        .build()
+                bigQuery = BigQueryOptions
+//          for local running
+//                        .newBuilder()
+//                        .setCredentials(GoogleCredentials
+//                                .fromStream(new FileInputStream(PATH_TO_JSON_KEY)))
+//                        .setProjectId(PROJECT_ID)
+//                        .build()
+                        .getDefaultInstance()
                         .getService();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

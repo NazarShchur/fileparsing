@@ -16,15 +16,17 @@ public class StorageProvider {
 
     public static Storage getStorage(){
         if(storage == null){
-            StorageOptions options;
+            StorageOptions options = null;
             try {
-                options = StorageOptions.newBuilder()
-                        .setProjectId(PROJECT_ID)
-                        .setCredentials(GoogleCredentials
-                                .fromStream(new FileInputStream(PATH_TO_JSON_KEY)))
-                        .build();
-            } catch (IOException e){
-                throw new RuntimeException(e);
+                options = StorageOptions.getDefaultInstance();
+                //for a local running
+//                        .newBuilder()
+//                        .setProjectId(PROJECT_ID)
+//                        .setCredentials(GoogleCredentials
+//                                .fromStream(new FileInputStream(PATH_TO_JSON_KEY)))
+//                        .build();
+            } catch (Exception e){
+                e.printStackTrace();
             }
             storage = options.getService();
         }
