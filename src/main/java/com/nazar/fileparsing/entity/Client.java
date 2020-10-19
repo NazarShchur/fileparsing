@@ -15,7 +15,7 @@ import org.apache.avro.message.SchemaStore;
 @org.apache.avro.specific.AvroGenerated
 public class Client extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
   private static final long serialVersionUID = 6967928113127613637L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Client\",\"namespace\":\"com.nazar.fileparsing.entity\",\"fields\":[{\"name\":\"id\",\"type\":\"long\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"phone\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"address\",\"type\":[\"null\",\"string\"],\"default\":null}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Client\",\"namespace\":\"com.nazar.fileparsing.entity\",\"fields\":[{\"name\":\"id\",\"type\":\"long\"},{\"name\":\"name\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"phone\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"address\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -72,9 +72,9 @@ public class Client extends org.apache.avro.specific.SpecificRecordBase implemen
   }
 
   @Deprecated public long id;
-  @Deprecated public java.lang.CharSequence name;
-  @Deprecated public java.lang.CharSequence phone;
-  @Deprecated public java.lang.CharSequence address;
+  @Deprecated public java.lang.String name;
+  @Deprecated public java.lang.String phone;
+  @Deprecated public java.lang.String address;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -90,7 +90,7 @@ public class Client extends org.apache.avro.specific.SpecificRecordBase implemen
    * @param phone The new value for phone
    * @param address The new value for address
    */
-  public Client(java.lang.Long id, java.lang.CharSequence name, java.lang.CharSequence phone, java.lang.CharSequence address) {
+  public Client(java.lang.Long id, java.lang.String name, java.lang.String phone, java.lang.String address) {
     this.id = id;
     this.name = name;
     this.phone = phone;
@@ -115,9 +115,9 @@ public class Client extends org.apache.avro.specific.SpecificRecordBase implemen
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
     case 0: id = (java.lang.Long)value$; break;
-    case 1: name = (java.lang.CharSequence)value$; break;
-    case 2: phone = (java.lang.CharSequence)value$; break;
-    case 3: address = (java.lang.CharSequence)value$; break;
+    case 1: name = value$ != null ? value$.toString() : null; break;
+    case 2: phone = value$ != null ? value$.toString() : null; break;
+    case 3: address = value$ != null ? value$.toString() : null; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -143,7 +143,7 @@ public class Client extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'name' field.
    * @return The value of the 'name' field.
    */
-  public java.lang.CharSequence getName() {
+  public java.lang.String getName() {
     return name;
   }
 
@@ -152,7 +152,7 @@ public class Client extends org.apache.avro.specific.SpecificRecordBase implemen
    * Sets the value of the 'name' field.
    * @param value the value to set.
    */
-  public void setName(java.lang.CharSequence value) {
+  public void setName(java.lang.String value) {
     this.name = value;
   }
 
@@ -160,7 +160,7 @@ public class Client extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'phone' field.
    * @return The value of the 'phone' field.
    */
-  public java.lang.CharSequence getPhone() {
+  public java.lang.String getPhone() {
     return phone;
   }
 
@@ -169,7 +169,7 @@ public class Client extends org.apache.avro.specific.SpecificRecordBase implemen
    * Sets the value of the 'phone' field.
    * @param value the value to set.
    */
-  public void setPhone(java.lang.CharSequence value) {
+  public void setPhone(java.lang.String value) {
     this.phone = value;
   }
 
@@ -177,7 +177,7 @@ public class Client extends org.apache.avro.specific.SpecificRecordBase implemen
    * Gets the value of the 'address' field.
    * @return The value of the 'address' field.
    */
-  public java.lang.CharSequence getAddress() {
+  public java.lang.String getAddress() {
     return address;
   }
 
@@ -186,7 +186,7 @@ public class Client extends org.apache.avro.specific.SpecificRecordBase implemen
    * Sets the value of the 'address' field.
    * @param value the value to set.
    */
-  public void setAddress(java.lang.CharSequence value) {
+  public void setAddress(java.lang.String value) {
     this.address = value;
   }
 
@@ -232,9 +232,9 @@ public class Client extends org.apache.avro.specific.SpecificRecordBase implemen
     implements org.apache.avro.data.RecordBuilder<Client> {
 
     private long id;
-    private java.lang.CharSequence name;
-    private java.lang.CharSequence phone;
-    private java.lang.CharSequence address;
+    private java.lang.String name;
+    private java.lang.String phone;
+    private java.lang.String address;
 
     /** Creates a new Builder */
     private Builder() {
@@ -332,7 +332,7 @@ public class Client extends org.apache.avro.specific.SpecificRecordBase implemen
       * Gets the value of the 'name' field.
       * @return The value.
       */
-    public java.lang.CharSequence getName() {
+    public java.lang.String getName() {
       return name;
     }
 
@@ -342,7 +342,7 @@ public class Client extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'name'.
       * @return This builder.
       */
-    public com.nazar.fileparsing.entity.Client.Builder setName(java.lang.CharSequence value) {
+    public com.nazar.fileparsing.entity.Client.Builder setName(java.lang.String value) {
       validate(fields()[1], value);
       this.name = value;
       fieldSetFlags()[1] = true;
@@ -372,7 +372,7 @@ public class Client extends org.apache.avro.specific.SpecificRecordBase implemen
       * Gets the value of the 'phone' field.
       * @return The value.
       */
-    public java.lang.CharSequence getPhone() {
+    public java.lang.String getPhone() {
       return phone;
     }
 
@@ -382,7 +382,7 @@ public class Client extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'phone'.
       * @return This builder.
       */
-    public com.nazar.fileparsing.entity.Client.Builder setPhone(java.lang.CharSequence value) {
+    public com.nazar.fileparsing.entity.Client.Builder setPhone(java.lang.String value) {
       validate(fields()[2], value);
       this.phone = value;
       fieldSetFlags()[2] = true;
@@ -412,7 +412,7 @@ public class Client extends org.apache.avro.specific.SpecificRecordBase implemen
       * Gets the value of the 'address' field.
       * @return The value.
       */
-    public java.lang.CharSequence getAddress() {
+    public java.lang.String getAddress() {
       return address;
     }
 
@@ -422,7 +422,7 @@ public class Client extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'address'.
       * @return This builder.
       */
-    public com.nazar.fileparsing.entity.Client.Builder setAddress(java.lang.CharSequence value) {
+    public com.nazar.fileparsing.entity.Client.Builder setAddress(java.lang.String value) {
       validate(fields()[3], value);
       this.address = value;
       fieldSetFlags()[3] = true;
@@ -454,9 +454,9 @@ public class Client extends org.apache.avro.specific.SpecificRecordBase implemen
       try {
         Client record = new Client();
         record.id = fieldSetFlags()[0] ? this.id : (java.lang.Long) defaultValue(fields()[0]);
-        record.name = fieldSetFlags()[1] ? this.name : (java.lang.CharSequence) defaultValue(fields()[1]);
-        record.phone = fieldSetFlags()[2] ? this.phone : (java.lang.CharSequence) defaultValue(fields()[2]);
-        record.address = fieldSetFlags()[3] ? this.address : (java.lang.CharSequence) defaultValue(fields()[3]);
+        record.name = fieldSetFlags()[1] ? this.name : (java.lang.String) defaultValue(fields()[1]);
+        record.phone = fieldSetFlags()[2] ? this.phone : (java.lang.String) defaultValue(fields()[2]);
+        record.address = fieldSetFlags()[3] ? this.address : (java.lang.String) defaultValue(fields()[3]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -518,20 +518,20 @@ public class Client extends org.apache.avro.specific.SpecificRecordBase implemen
     if (fieldOrder == null) {
       this.id = in.readLong();
 
-      this.name = in.readString(this.name instanceof Utf8 ? (Utf8)this.name : null);
+      this.name = in.readString();
 
       if (in.readIndex() != 1) {
         in.readNull();
         this.phone = null;
       } else {
-        this.phone = in.readString(this.phone instanceof Utf8 ? (Utf8)this.phone : null);
+        this.phone = in.readString();
       }
 
       if (in.readIndex() != 1) {
         in.readNull();
         this.address = null;
       } else {
-        this.address = in.readString(this.address instanceof Utf8 ? (Utf8)this.address : null);
+        this.address = in.readString();
       }
 
     } else {
@@ -542,7 +542,7 @@ public class Client extends org.apache.avro.specific.SpecificRecordBase implemen
           break;
 
         case 1:
-          this.name = in.readString(this.name instanceof Utf8 ? (Utf8)this.name : null);
+          this.name = in.readString();
           break;
 
         case 2:
@@ -550,7 +550,7 @@ public class Client extends org.apache.avro.specific.SpecificRecordBase implemen
             in.readNull();
             this.phone = null;
           } else {
-            this.phone = in.readString(this.phone instanceof Utf8 ? (Utf8)this.phone : null);
+            this.phone = in.readString();
           }
           break;
 
@@ -559,7 +559,7 @@ public class Client extends org.apache.avro.specific.SpecificRecordBase implemen
             in.readNull();
             this.address = null;
           } else {
-            this.address = in.readString(this.address instanceof Utf8 ? (Utf8)this.address : null);
+            this.address = in.readString();
           }
           break;
 

@@ -65,7 +65,12 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>2.9.2</version>
 		</dependency>
-    </dependencies>
+		<dependency>
+			<groupId>com.google.cloud</groupId>
+			<artifactId>google-cloud-bigquery</artifactId>
+			<version>1.101.0</version>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<plugins>
@@ -77,6 +82,9 @@
 				<groupId>org.apache.avro</groupId>
 				<artifactId>avro-maven-plugin</artifactId>
 				<version>1.9.2</version>
+				<configuration>
+					<stringType>String</stringType>
+				</configuration>
 				<executions>
 					<execution>
 						<phase>generate-sources</phase>

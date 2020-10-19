@@ -1,23 +1,26 @@
 package com.nazar.fileparsing.service;
 
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.bigquery.BigQuery;
+import com.google.cloud.bigquery.BigQueryOptions;
+import com.google.cloud.bigquery.InsertAllRequest;
+import com.google.cloud.bigquery.InsertAllResponse;
 import com.nazar.fileparsing.entity.Client;
 import com.nazar.fileparsing.repository.StorageRepository;
 import lombok.AllArgsConstructor;
 import org.apache.avro.file.DataFileReader;
-import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericDatumReader;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.io.DatumReader;
-import org.apache.avro.io.Decoder;
-import org.apache.avro.io.DecoderFactory;
-import org.apache.avro.specific.SpecificDatumReader;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -32,7 +35,13 @@ public class ClientService {
         try {
             DataFileReader<Client> dataFileReader = new DataFileReader<>(file, datumReader);
             while (dataFileReader.hasNext()) {
-                list.add(dataFileReader.next());
+                GenericRecord record = dataFileReader.next();
+                list.add(Client.newBuilder()
+                        .setId((long) record.get("id"))
+                        .setName((String) record.get("name"))
+                        .setPhone((String) record.get("phone"))
+                        .setAddress((String) record.get("address"))
+                        .build());
             }
         } catch (IOException e) {
             e.printStackTrace();
