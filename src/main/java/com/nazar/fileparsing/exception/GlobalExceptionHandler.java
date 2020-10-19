@@ -1,5 +1,6 @@
 package com.nazar.fileparsing.exception;
 
+import org.apache.avro.AvroRuntimeException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -14,7 +15,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity handleIOException(IOException e) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
     }
-    @ExceptionHandler(InvalidAvroMagicException.class)
+    @ExceptionHandler({InvalidAvroMagicException.class, AvroRuntimeException.class})
     public ResponseEntity handleAvroException(InvalidAvroMagicException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
