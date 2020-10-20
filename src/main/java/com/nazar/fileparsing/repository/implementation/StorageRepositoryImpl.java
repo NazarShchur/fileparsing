@@ -1,7 +1,8 @@
-package com.nazar.fileparsing.repository;
+package com.nazar.fileparsing.repository.implementation;
 
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.Storage;
+import com.nazar.fileparsing.repository.StorageRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 

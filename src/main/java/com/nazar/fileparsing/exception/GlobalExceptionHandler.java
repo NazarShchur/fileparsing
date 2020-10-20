@@ -11,7 +11,7 @@ import java.io.IOException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(IOException.class)
+    @ExceptionHandler({IOException.class, FileProblemException.class})
     public ResponseEntity handleIOException(IOException e) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
     }
