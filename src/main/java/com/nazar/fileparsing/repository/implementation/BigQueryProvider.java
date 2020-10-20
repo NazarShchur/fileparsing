@@ -17,18 +17,18 @@ public class BigQueryProvider {
     public static BigQuery getBigQuery() {
         if (bigQuery == null) {
             //for a local running
-            try {
-                bigQuery = BigQueryOptions
-                        .newBuilder()
-                        .setCredentials(GoogleCredentials
-                                .fromStream(new FileInputStream(PATH_TO_JSON_KEY)))
-                        .setProjectId(PROJECT_ID)
-                        .build()
-                        .getService();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-           // bigQuery = BigQueryOptions.getDefaultInstance().getService();
+//            try {
+//                bigQuery = BigQueryOptions
+//                        .newBuilder()
+//                        .setCredentials(GoogleCredentials
+//                                .fromStream(new FileInputStream(PATH_TO_JSON_KEY)))
+//                        .setProjectId(PROJECT_ID)
+//                        .build()
+//                        .getService();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+            bigQuery = BigQueryOptions.getDefaultInstance().getService();
         }
         return bigQuery;
     }
