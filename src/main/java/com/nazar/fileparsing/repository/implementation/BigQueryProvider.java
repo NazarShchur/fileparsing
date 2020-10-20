@@ -1,7 +1,10 @@
-package com.nazar.fileparsing.repository;
+package com.nazar.fileparsing.repository.implementation;
 
+import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.bigquery.BigQuery;
 import com.google.cloud.bigquery.BigQueryOptions;
+
+import java.io.FileInputStream;
 
 public class BigQueryProvider {
     private static final String PROJECT_ID = "fileparcing";

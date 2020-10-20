@@ -1,7 +1,10 @@
-package com.nazar.fileparsing.repository;
+package com.nazar.fileparsing.repository.implementation;
 
+import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
+
+import java.io.FileInputStream;
 
 public class StorageProvider {
     private static final String PROJECT_ID = "fileparsing";
